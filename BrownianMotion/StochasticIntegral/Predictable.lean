@@ -38,20 +38,20 @@ section
 variable [Preorder ι]
 
 /-- A filtration `𝓕` is right continuous if `𝓕 t = ⨅ j > i, 𝓕 j = 𝓕 i` for all `t`. -/
-class IsRightContinuous (𝓕 : Filtration ι m) where
-    /-- The right continuity property. -/
-    RC (i : ι) : ⨅ j > i, 𝓕 j = 𝓕 i
+def IsRightContinuous (𝓕 : Filtration ι m) := ∀ i, ⨅ j > i, 𝓕 j = 𝓕 i
 
-lemma measurableSet_of_isRightContinuous {𝓕 : Filtration ι m} [IsRightContinuous 𝓕] {i : ι}
+lemma measurableSet_of_isRightContinuous {𝓕 : Filtration ι m} (h𝓕 : IsRightContinuous 𝓕) {i : ι}
     {s : Set Ω} (hs : MeasurableSet[⨅ j > i, 𝓕 j] s) :
     MeasurableSet[𝓕 i] s := by
   convert hs
-  rw [IsRightContinuous.RC i]
+  rw [h𝓕]
 
 /-- A filtration `𝓕` is said to satisfy the usual conditions if it is right continuous and `𝓕 0`
   and consequently `𝓕 t` is complete (i.e. contains all null sets) for all `t`. -/
-class Filtration.UsualConditions [OrderBot ι] (𝓕 : Filtration ι m) (μ : Measure Ω := by volume_tac)
-    extends IsRightContinuous 𝓕 where
+class Filtration.UsualConditions [OrderBot ι] (𝓕 : Filtration ι m)
+    (μ : Measure Ω := by volume_tac) where
+    /-- `𝓕` is right continuous. -/
+    RC : IsRightContinuous 𝓕
     /-- `𝓕 ⊥` contains all the null sets. -/
     IsComplete ⦃s : Set Ω⦄ (hs : μ s = 0) : MeasurableSet[𝓕 ⊥] s
 

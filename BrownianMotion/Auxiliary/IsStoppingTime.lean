@@ -18,7 +18,7 @@ lemma isStoppingTime_of_measurableSet_lt_of_isRightContinuous [NoMaxOrder ι]
   obtain ⟨u, hu₁, hu₂, hu₃⟩ := exists_seq_strictAnti_tendsto i
   refine MeasurableSet.of_compl ?_
   rw [(_ : {ω | τ ω ≤ i}ᶜ = ⋃ n, {ω | u n ≤ τ ω})]
-  · refine measurableSet_of_isRightContinuous ?_
+  · refine measurableSet_of_isRightContinuous h𝓕 ?_
     simp_rw [MeasurableSpace.measurableSet_iInf]
     intros j hj
     obtain ⟨N, hN⟩ := (hu₃.eventually_le_const hj).exists
@@ -58,16 +58,16 @@ lemma isStoppingTime_of_measurableSet_lt_of_isRightContinuous' {τ : Ω → With
     IsStoppingTime 𝓕 τ := by
   intro i
   by_cases hmax : IsMax i
-  · have := IsRightContinuous.RC (𝓕 := 𝓕) i
-    rw [iInf₂_eq_top.2] at this
-    · exact this.le _ trivial
+  · specialize h𝓕 i
+    rw [iInf₂_eq_top.2] at h𝓕
+    · exact h𝓕.le _ trivial
     · exact fun j hj ↦ False.elim <| hmax.not_lt hj
   rw [not_isMax_iff] at hmax
   obtain ⟨j, hj⟩ := hmax
   obtain ⟨u, hu₁, hu₂, hu₃⟩ := exists_seq_strictAnti_tendsto' hj
   refine MeasurableSet.of_compl ?_
   rw [(_ : {ω | τ ω ≤ i}ᶜ = ⋃ n, {ω | u n ≤ τ ω})]
-  · refine measurableSet_of_isRightContinuous ?_
+  · refine measurableSet_of_isRightContinuous h𝓕 ?_
     simp_rw [MeasurableSpace.measurableSet_iInf]
     intros j hj
     obtain ⟨N, hN⟩ := (hu₃.eventually_le_const hj).exists
