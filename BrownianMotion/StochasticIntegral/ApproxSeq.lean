@@ -16,7 +16,8 @@ open scoped NNReal ENNReal Topology
 
 namespace MeasureTheory
 
-variable {ι Ω E : Type*} [TopologicalSpace ι] [TopologicalSpace E]
+variable {ι Ω E : Type*} [TopologicalSpace ι] [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [CompleteSpace E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
   {mΩ : MeasurableSpace Ω} {μ : Measure Ω} {X : ι → Ω → ℝ} {τ : Ω → WithTop ι} {n : ι}
 
 -- Find better name, `RightContinuous` already exists for filtrations

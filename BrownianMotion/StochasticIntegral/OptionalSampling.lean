@@ -16,6 +16,7 @@ variable {ι Ω E : Type*} [LinearOrder ι] [TopologicalSpace ι] [OrderTopology
   {mΩ : MeasurableSpace Ω} {𝓕 : Filtration ι mΩ} {μ : Measure Ω} [IsFiniteMeasure μ]
   {X : ι → Ω → ℝ} {τ : Ω → WithTop ι} {n : ι}
 
+-- TODO: generalize to Banach space
 theorem stoppedValue_ae_eq_condExp_of_le_const_of_discreteApproxSequence
     (h : Martingale X 𝓕 μ) (hRC : rightContinuous X)
     (hτ : IsStoppingTime 𝓕 τ) (hτ_le : ∀ x, τ x ≤ n) (τn : DiscreteApproxSequence 𝓕 μ τ) :
